@@ -25,8 +25,8 @@ public class BattleFieldFile {
         }
         // TODO clean this up
         ProcessBuilder builder = new ProcessBuilder(
-                "cmd.exe", "/c", "cd \"D:\\Code\\RobocodeTester\"" +
-                "&& java -Xmx512M -Ddebug=true -Dsun.io.useCanonCaches=false -cp libs/robocode.jar robocode.Robocode -battle " + file.toPath() + " -nodisplay -results temp\\temp.txt");
+                "cmd.exe", "/c", "cd " + System.getProperty("user.dir") +
+                "&& java -Xmx512M -Ddebug=true -Dsun.io.useCanonCaches=false -cp libs/robocode.jar robocode.Robocode -battle " + file.toPath() + " -nodisplay -results temp.txt");
         builder.redirectErrorStream(true);
         Process p = null;
         try {
