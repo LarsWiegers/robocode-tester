@@ -1,23 +1,26 @@
 package com.lars_wiegers;
 
 import java.util.Scanner;
+
 import com.lars_wiegers.Battles.BattleFieldFile;
 import com.lars_wiegers.Battles.BattleFieldFileDoesNotExistException;
 import com.lars_wiegers.Battles.BattleFieldFileDoesNotHaveTheRightExtension;
 import com.lars_wiegers.Battles.BattleFieldFileIsAdirectoryException;
 
 public class Main {
-    private int exitMenuoption = 6;
+    static final int EXIT_MENU_OPTION = 3;
+
     public static void main(String[] args) {
         (new Main()).run();
     }
-    private void run() {
-        int menuOption = 0;
 
-        while(menuOption != this.exitMenuoption) {
+    private void run() {
+        int menuOption;
+
+        while (true) {
             displayMenu();
             menuOption = askForMenuChoice();
-            switch(menuOption) {
+            switch (menuOption) {
                 case 1:
                     System.out.print("Please give me a battle file: ");
                     Scanner scanner = new Scanner(System.in);
@@ -45,12 +48,12 @@ public class Main {
     private int askForMenuChoice() {
         Scanner scanner = new Scanner(System.in);
         int menuOption;
-        while(true) {
+        while (true) {
             System.out.println("Please choice a option: ");
             menuOption = scanner.nextInt();
 
             // this assumes that the last option always is the exit option
-            if(menuOption > 0 && menuOption < (this.exitMenuoption + 1)) {
+            if (menuOption > 0 && menuOption < (EXIT_MENU_OPTION + 1)) {
                 return menuOption;
             }
         }
