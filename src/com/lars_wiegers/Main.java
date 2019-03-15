@@ -35,13 +35,8 @@ public class Main {
                 case 2:
                     break;
                 case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-
-                case 6:
-
+                    System.out.println("Thank you for using this program!");
+                    System.exit(0);
                     break;
             }
         }
