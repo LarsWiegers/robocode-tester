@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 public class BattleFieldFile {
     static final String TEMP_FILE = "temp.txt";
+    File file;
 
     public BattleFieldFile(String battleFilePath)
             throws
@@ -26,34 +27,15 @@ public class BattleFieldFile {
             throw new BattleFieldFileDoesNotHaveTheRightExtension();
         }
 
-        // TODO clean this up
-        ProcessBuilder builder = new ProcessBuilder(
-                "cmd.exe", "/c", "cd " + System.getProperty("user.dir") +
-                "&& java -Xmx512M -Ddebug=true -Dsun.io.useCanonCaches=false -cp libs/robocode.jar robocode.Robocode -battle " + file.toPath() + " -nodisplay -results" + TEMP_FILE);
-        builder.redirectErrorStream(true);
-        Process p = null;
+        this.setFile(file);
+    }
 
-        try {
-            p = builder.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void setFile(File file) {
+        this.file = file;
+    }
 
-        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = null;
-        while (true) {
-            try {
-                line = r.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (line == null) {
-                break;
-            }
-            System.out.println(line);
-        }
-
-        // throw an exception if it is not right
+    public File getFile() {
+        return file;
     }
 
     private static String getFileExtension(File file) {
@@ -61,5 +43,10 @@ public class BattleFieldFile {
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         else return "";
+    }
+
+    @Override
+    public String toString() {
+        return this.file.getName();
     }
 }
