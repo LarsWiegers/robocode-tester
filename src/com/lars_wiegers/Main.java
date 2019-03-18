@@ -46,13 +46,8 @@ public class Main {
                         System.out.println("Running battle now!");
                         Battle battle = new Battle(battleFile, "single_battle");
                         battle.start();
-                        try {
-                            printResults(battle.getResults(), battle);
-                        } catch (BattleHasNotBeenStartedException e) {
-                            System.out.println("Something went wrong because we never started the battle");
-                        }finally{
-                            battle.stop();
-                        }
+                        printResults(battle);
+                        battle.stop();
                     }else {
                         System.out.println("Okay, your file is correct!");
                     }
@@ -90,13 +85,11 @@ public class Main {
                             battle.start();
                         }
                         for (Battle battle: battles) {
-                            try {
-                                printResults(battle.getResults(), battle);
-                            } catch (BattleHasNotBeenStartedException e) {
-                                System.out.println("Something went wrong because we never started the battle");
-                            }finally{
-                                battle.stop();
-                            }
+                                printResults(battle);
+                        }
+                        printAverages(Battle.calcAverageOfResults(battles));
+                        for (Battle battle: battles) {
+                            battle.stop();
                         }
                     }else {
                         System.out.println("Okay, that's fine.");
@@ -119,10 +112,14 @@ public class Main {
         }
     }
 
-    private void printResults(ArrayList<Result> results, Battle battle) {
+    /**
+     *
+     * @param results An ArrayList that contains 1 or more result objects
+     */
+    private void printAverages(ArrayList<Result> results) {
         String leftAlignFormat = "| %-25s | %-12s | %-8s |%n";
         System.out.format("+---------------------------+--------------+----------+%n");
-        System.out.format("| %-51s |%n", battle.getBattleFile().getFile().getName());
+        System.out.format("| %-51s |%n", "Averages");
         System.out.format("+---------------------------+--------------+----------+%n");
         System.out.format("| Robot name                | Score        | Survival |%n");
         System.out.format("+---------------------------+--------------+----------+%n");
@@ -139,6 +136,39 @@ public class Main {
         System.out.println();
     }
 
+    /**
+     *
+     * @param battle an Battle object
+     */
+    private void printResults(Battle battle) {
+        String leftAlignFormat = "| %-25s | %-12s | %-8s |%n";
+        System.out.format("+---------------------------+--------------+----------+%n");
+        System.out.format("| %-51s |%n", battle.getBattleFile().getFile().getName());
+        System.out.format("+---------------------------+--------------+----------+%n");
+        System.out.format("| Robot name                | Score        | Survival |%n");
+        System.out.format("+---------------------------+--------------+----------+%n");
+
+        try {
+            for (Result result: battle.getResults()) {
+                System.out.format(leftAlignFormat,
+                        result.getName(),
+                        result.getScore(),
+                        result.getSurvival()
+                );
+            }
+        } catch (BattleHasNotBeenStartedException e) {
+            System.out.format("| %-51s |%n", "It seems like the battle has not been started");
+        }
+
+        System.out.format("+---------------------------+--------------+----------+%n");
+        System.out.println();
+    }
+
+    /**
+     * Append 'yes or no?' to the system.out and check for a answer that we can accept
+     *      *
+     * @return bool if yes return true else return false
+     */
     private boolean askForYesOrNo() {
         Scanner scanner = new Scanner(System.in);
         String yesOrNo;
@@ -155,6 +185,11 @@ public class Main {
         }
     }
 
+    /**
+     * Get the option of the menu items that the user wants to select
+     *
+     * @return int menu choice
+     */
     private int askForMenuChoice() {
         Scanner scanner = new Scanner(System.in);
         int menuOption;
@@ -169,6 +204,9 @@ public class Main {
         }
     }
 
+    /**
+     * Write the menu to the system.out
+     */
     private void displayMenu() {
         System.out.println("**********************************");
         System.out.println("***   Robocode Tester menu     ***");

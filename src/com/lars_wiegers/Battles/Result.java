@@ -6,10 +6,16 @@ public class Result {
     private String survival;
 
     public Result(String line) {
-        String[] sections = line.split("\t");
-        this.setName(sections[0]);
-        this.setScore(sections[1]);
-        this.setSurvival(sections[2]);
+        this(
+            line.split(" ")[1].split("\t")[0],
+            line.split("\t")[1],
+            line.split("\t")[2]
+        );
+    }
+    public Result(String name, String score, String surival) {
+        this.setName(name);
+        this.setScore(score);
+        this.setSurvival(surival);
     }
 
     private void setScore(String score) {
