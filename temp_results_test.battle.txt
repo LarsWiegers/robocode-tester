@@ -1,0 +1,6 @@
+Results for 10 rounds
+Robot Name	    Total Score    	Survival	Surv Bonus	Bullet Dmg	Bullet Bonus	Ram Dmg * 2	Ram Bonus	 1sts 	 2nds 	 3rds 	
+1st: sample.Walls	4234 (59%)	1500	300	2111	309	14	0	10	0	0	
+2nd: sample.MyFirstRobot	1623 (23%)	1000	0	585	33	5	0	0	10	0	
+3rd: sample.Fire	1286 (18%)	500	0	760	26	0	0	0	0	10	
+4th: sample.SittingDuck	0 (0%)	0	0	0	0	0	0	0	0	0	

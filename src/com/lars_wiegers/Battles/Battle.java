@@ -22,16 +22,16 @@ public class Battle {
     public static ArrayList<Result> calcAverageOfResults(ArrayList<Battle> battles) {
         ArrayList<Integer> scores = new ArrayList<>();
         HashMap<String, ArrayList<Result>> results = new HashMap<>();
-        for (Battle battle: battles ) {
+        for (Battle battle : battles) {
             try {
-
                 for (Result result : battle.getResults()) {
                     String score = result.getScore();
                     int percentageScore = Integer.parseInt(
                             score.substring(score.indexOf("(") + 1, score.indexOf("%)"))
                     );
+
                     ArrayList<Result> currentBattleResults = results.get(result.getName());
-                    if(currentBattleResults == null) {
+                    if (currentBattleResults == null) {
                         currentBattleResults = new ArrayList<>();
                     }
                     currentBattleResults.add(result);
@@ -46,9 +46,10 @@ public class Battle {
         ArrayList<Result> test = new ArrayList<>();
         Iterator it = results.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             int totalScore = 0;
             int totalServival = 0;
+
             for (int i = 0; i < results.get(pair.getKey()).size(); i++) {
                 String score = results.get(pair.getKey()).get(i).getScore();
                 String survival = results.get(pair.getKey()).get(i).getSurvival();
@@ -56,10 +57,11 @@ public class Battle {
                         score.substring(score.indexOf("(") + 1, score.indexOf("%)")));
                 totalServival += Integer.parseInt(survival);
             }
+
             Result result = new Result("" + pair.getKey(),
-                    "" + (totalScore/
+                    "" + (totalScore /
                             results.get(pair.getKey()).size()) + "%",
-                    "" + (totalServival/
+                    "" + (totalServival /
                             results.get(pair.getKey()).size()));
             test.add(result);
             it.remove();
@@ -76,13 +78,12 @@ public class Battle {
         return this.battleFile;
     }
 
-
     public void start() {
         this.startHasBeenCalled = true;
         // TODO clean this up
         ProcessBuilder builder = new ProcessBuilder(
                 "cmd.exe", "/c", "cd " + System.getProperty("user.dir") +
-                " && java -Xmx512M -Ddebug=true -Dsun.io.useCanonCaches=false -cp libs/robocode.jar"+
+                " && java -Xmx512M -Ddebug=true -Dsun.io.useCanonCaches=false -cp libs/robocode.jar" +
                 " robocode.Robocode -battle " + this.getBattleFile().getFile() + " -nodisplay -results " + this.resultFilePath);
         builder.redirectErrorStream(true);
         Process p = null;
@@ -102,17 +103,19 @@ public class Battle {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             if (line == null) {
                 break;
             }
-            if(debugMode) {
+
+            if (debugMode) {
                 System.out.println(line);
             }
         }
     }
 
     public ArrayList<Result> getResults() throws BattleHasNotBeenStartedException {
-        if(!this.startHasBeenCalled){
+        if (!this.startHasBeenCalled) {
             throw new BattleHasNotBeenStartedException();
         }
         ResultFile resultFile = new ResultFile(this.resultFilePath);
@@ -120,7 +123,21 @@ public class Battle {
     }
 
     public void stop() {
-//        File file = new File(this.resultFilePath);
-//        file.delete();
+        Scanner scanner = new Scanner(System.in);
+        String yesOrNo;
+        while (true) {
+            System.out.print("Would you like to delete the result files? ");
+            yesOrNo = scanner.nextLine();
+
+            // This assumes that the last option always is the exit option
+            if (yesOrNo.equals("yes")) {
+                File file = new File(this.resultFilePath);
+                file.delete();
+            } else if (yesOrNo.equals("no")) {
+                System.out.println("The files will not be deleted. On the next rounds, they will be overwritten!");
+            } else {
+                System.out.print("Huh? ");
+            }
+        }
     }
 }

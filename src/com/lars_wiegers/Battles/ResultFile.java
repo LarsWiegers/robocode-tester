@@ -25,11 +25,9 @@ public class ResultFile {
             for (int i = 2; i < lines.size(); i++) {
                 results.add(new Result(lines.get(i)));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return results;
     }
 
