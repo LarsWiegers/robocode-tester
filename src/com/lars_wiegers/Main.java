@@ -166,7 +166,7 @@ public class Main {
 
     /**
      * Append 'yes or no?' to the system.out and check for a answer that we can accept
-     *      *
+     *
      * @return bool if yes return true else return false
      */
     private boolean askForYesOrNo() {

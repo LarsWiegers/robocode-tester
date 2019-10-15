@@ -5,4 +5,4 @@ robocode.battle.numRounds=10
 robocode.battle.gunCoolingRate=0.1
 robocode.battle.rules.inactivityTime=450
 robocode.battle.hideEnemyNames=true
-robocode.battle.selectedRobots=nl.saxion.MyCornerRobot1,sample.Fire,sample.MyFirstRobot,sample.SittingDuck,sample.Walls
+robocode.battle.selectedRobots=nl.saxion.dhi1vsop2.MyCornerRobot1,sample.Fire,sample.MyFirstRobot,sample.SittingDuck,sample.Walls
